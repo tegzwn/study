@@ -3,7 +3,7 @@
 
 int main()
 {
-	FILE *fp;  // FILEÀàĞÍ£¬ÔÚstdio.hÍ·ÎÄ¼şÖĞ£¬FILEÀàÊÇÒ»¸ö½á¹¹Ìå£¬´ú±íÈÎºÎÒ»¸öÈÎºÎÀàĞÍµÄÎÄ¼ş£¬ÓÃÓÚÎÄ¼şµÄ¶ÁĞ´²Ù×÷¡£
+	FILE *fp;  // FILEç±»å‹ï¼Œåœ¨stdio.hå¤´æ–‡ä»¶ä¸­ï¼ŒFILEç±»æ˜¯ä¸€ä¸ªç»“æ„ä½“ï¼Œä»£è¡¨ä»»ä½•ä¸€ä¸ªä»»ä½•ç±»å‹çš„æ–‡ä»¶ï¼Œç”¨äºæ–‡ä»¶çš„è¯»å†™æ“ä½œã€‚
 	int i, j;
 	unsigned char FileHeader[14];
 	unsigned char InfoHeader[40];
@@ -13,11 +13,11 @@ int main()
 	char fileName_IN[]	= "lena_in.bmp";
 
 	unsigned char temp;
-	int dataOffset;  //´ÓÎÄ¼şÍ·µ½Êµ¼ÊÎ»Í¼Êı¾İµÄÆ«ÒÆ×Ö½ÚÊı=Î»Í¼ÎÄ¼şÍ·³¤¶È+Î»Í¼ĞÅÏ¢Í·³¤¶È+µ÷É«°å³¤¶È
+	int dataOffset;  //ä»æ–‡ä»¶å¤´åˆ°å®é™…ä½å›¾æ•°æ®çš„åç§»å­—èŠ‚æ•°=ä½å›¾æ–‡ä»¶å¤´é•¿åº¦+ä½å›¾ä¿¡æ¯å¤´é•¿åº¦+è°ƒè‰²æ¿é•¿åº¦
 
 	read_bmpHeader(fileName_IN, FileHeader, InfoHeader, rgbQuad);
 
-	//¶ÁÍ¼ÏñÊı¾İ
+	//è¯»å›¾åƒæ•°æ®
 	dataOffset = 14 + 40 + CLRUSED*4;
 
 	if ((fp = fopen(fileName_IN, "rb")) == NULL)
@@ -26,7 +26,7 @@ int main()
         exit(0);
 	}
 
-	fseek(fp, dataOffset, SEEK_SET);  //Ìø¹ıÍ¼ÏñÎÄ¼şÍ·²¿·Ö£¬¿ªÊ¼¶ÁÍ¼ÏñÊı¾İ
+	fseek(fp, dataOffset, SEEK_SET);  //è·³è¿‡å›¾åƒæ–‡ä»¶å¤´éƒ¨åˆ†ï¼Œå¼€å§‹è¯»å›¾åƒæ•°æ®
 
 	for (i = 0; i < HEIGHT; i++)
 	{
@@ -39,20 +39,20 @@ int main()
 
 	fclose(fp);
 
-	/*Êä³öÏÔÊ¾BMPÍ¼ÏñµÄÎÄ¼şÍ·¡¢ĞÅÏ¢Í·ºÍµ÷É«°åÈı²¿·ÖĞÅÏ¢*/
-	//Êä³öÎÄ¼şÍ·£¬14×Ö½Ú
+	/*è¾“å‡ºæ˜¾ç¤ºBMPå›¾åƒçš„æ–‡ä»¶å¤´ã€ä¿¡æ¯å¤´å’Œè°ƒè‰²æ¿ä¸‰éƒ¨åˆ†ä¿¡æ¯*/
+	//è¾“å‡ºæ–‡ä»¶å¤´ï¼Œ14å­—èŠ‚
 	printf("\n  BMP File Header\n");
 	for (i = 0; i < 14; i++){
 		printf("%d: %d\n", i+1, FileHeader[i]);
 	}
 
-	//Êä³öĞÅÏ¢Í·£¬40×Ö½Ú
+	//è¾“å‡ºä¿¡æ¯å¤´ï¼Œ40å­—èŠ‚
 	printf("\n  BMP Information Header\n");
 	for (i = 0; i < 40; i++){
 		printf("%d: %d\n", i+1, InfoHeader[i]);
 	}
 
-	//Êä³öµ÷É«°å£¬4*256×Ö½Ú
+	//è¾“å‡ºè°ƒè‰²æ¿ï¼Œ4*256å­—èŠ‚
     printf("\n  Color Map\n");
 	for (i = 0; i < 256; i++){
 		printf("%d: \t", i);

@@ -11,9 +11,9 @@
 #include <sys\types.h>
 #include <sys\stat.h>
 
-#define WIDTH 256   //Í¼Ïñ¿í¶È
-#define HEIGHT 256  //Í¼Ïñ¸ß¶È
-#define CLRUSED 256   // µ÷É«°åÑÕÉ«Êı£º256É«£¬Õë¶Ô8Î»»Ò¶ÈÍ¼
+#define WIDTH 256   //å›¾åƒå®½åº¦
+#define HEIGHT 256  //å›¾åƒé«˜åº¦
+#define CLRUSED 256   // è°ƒè‰²æ¿é¢œè‰²æ•°ï¼š256è‰²ï¼Œé’ˆå¯¹8ä½ç°åº¦å›¾
 
 void read_bmpHeader(char *filename, unsigned char bmFileHeader[], unsigned char bmInfoHeader[], unsigned char bmClrMap[]);
 
@@ -21,41 +21,41 @@ void read_bmpHeader(char *filename, unsigned char bmFileHeader[], unsigned char 
 
 /**************************************************
 *
-*   ÒÔÏÂ½á¹¹Ìå¶¨ÒåBMPÍ¼Ïñ£¨Î»Í¼£©ÎÄ¼şµÄ½á¹¹£¬°üº¬3
-*   ²¿·Ö£ºÎ»Í¼ÎÄ¼şÍ·¡¢Î»Í¼ĞÅÏ¢Í·¡¢µ÷É«°å£»Í¼ÏñÊı¾İ
-*   Î´°üº¬¡£¸Ã²¿·ÖÄÚÈİ×÷Îª¶ÔBMPÍ¼Ïñ½á¹¹µÄÁË½â¡£
+*   ä»¥ä¸‹ç»“æ„ä½“å®šä¹‰BMPå›¾åƒï¼ˆä½å›¾ï¼‰æ–‡ä»¶çš„ç»“æ„ï¼ŒåŒ…å«3
+*   éƒ¨åˆ†ï¼šä½å›¾æ–‡ä»¶å¤´ã€ä½å›¾ä¿¡æ¯å¤´ã€è°ƒè‰²æ¿ï¼›å›¾åƒæ•°æ®
+*   æœªåŒ…å«ã€‚è¯¥éƒ¨åˆ†å†…å®¹ä½œä¸ºå¯¹BMPå›¾åƒç»“æ„çš„äº†è§£ã€‚
 ***************************************************/
 
-//½á¹¹Ìå£¬Î»Í¼ÎÄ¼şÍ·£¬³¤¶ÈÎª14×Ö½Ú¡£unsigned short-2 Bytes (WORD), unsigned long-4 Bytes (DWORD)
+//ç»“æ„ä½“ï¼Œä½å›¾æ–‡ä»¶å¤´ï¼Œé•¿åº¦ä¸º14å­—èŠ‚ã€‚unsigned short-2 Bytes (WORD), unsigned long-4 Bytes (DWORD)
 struct bmpfileheader{
-   unsigned short  filetype;  //Ö¸¶¨ÎÄ¼şÀàĞÍ,±ØĞëÊÇ Ox424D£¬¼´×Ö·û´®"BM"£¨ËùÓĞ¡°.bmp¡±ÎÄ¼şµÄÍ·Á½×Ö×Ö½Ú¶¼ÊÇ¡°BM¡±£©¡£
-   unsigned long   filesize;  //Ö¸¶¨ÎÄ¼ş´óĞ¡£¬°üÀ¨Î»Í¼ÎÄ¼şÍ·µÄ14¸ö×Ö½Ú¡£
+   unsigned short  filetype;  //æŒ‡å®šæ–‡ä»¶ç±»å‹,å¿…é¡»æ˜¯ Ox424Dï¼Œå³å­—ç¬¦ä¸²"BM"ï¼ˆæ‰€æœ‰â€œ.bmpâ€æ–‡ä»¶çš„å¤´ä¸¤å­—å­—èŠ‚éƒ½æ˜¯â€œBMâ€ï¼‰ã€‚
+   unsigned long   filesize;  //æŒ‡å®šæ–‡ä»¶å¤§å°ï¼ŒåŒ…æ‹¬ä½å›¾æ–‡ä»¶å¤´çš„14ä¸ªå­—èŠ‚ã€‚
    short  reserved1;
    short  reserved2;
-   unsigned long   bitmapoffset;  //´ÓÎÄ¼şÍ·µ½Êµ¼ÊÎ»Í¼Êı¾İµÄÆ«ÒÆ×Ö½ÚÊı£¬¼´Î»Í¼ÎÄ¼şÍ·¡¢Î»Í¼ĞÅÏ¢Í·ºÍµ÷É«°åÈı¸ö²¿·ÖµÄ³¤¶ÈÖ®ºÍ¡£
+   unsigned long   bitmapoffset;  //ä»æ–‡ä»¶å¤´åˆ°å®é™…ä½å›¾æ•°æ®çš„åç§»å­—èŠ‚æ•°ï¼Œå³ä½å›¾æ–‡ä»¶å¤´ã€ä½å›¾ä¿¡æ¯å¤´å’Œè°ƒè‰²æ¿ä¸‰ä¸ªéƒ¨åˆ†çš„é•¿åº¦ä¹‹å’Œã€‚
 };
 
 
-//½á¹¹Ìå£¬Î»Í¼ĞÅÏ¢Í·£¬³¤¶ÈÎª40×Ö½Ú¡£
+//ç»“æ„ä½“ï¼Œä½å›¾ä¿¡æ¯å¤´ï¼Œé•¿åº¦ä¸º40å­—èŠ‚ã€‚
 struct bitmapheader{
-   unsigned long   size;  //Ö¸¶¨¸Ã½á¹¹ÌåµÄ³¤¶È£¬¼´40×Ö½Ú¡£
-   long   width;   //Ö¸¶¨Í¼ÏñµÄ¿í¶È£¬µ¥Î»ÊÇÏñËØ¡£
-   long   height;  //Ö¸¶¨Í¼ÏñµÄ¸ß¶È£¬µ¥Î»ÊÇÏñËØ¡£
-   unsigned short  planes;  //±ØĞëÊÇ1¡£
-   unsigned short  bitsperpixel; //Ö¸¶¨±íÊ¾ÑÕÉ«Ê±ÒªÓÃµ½µÄÎ»Êı£¬³£ÓÃÖµÎª1£¨ºÚ°×¶şÉ«Í¼£©¡¢4£¨16É«Í¼£©¡¢8£¨256É«Í¼£©¡¢24£¨Õæ²ÊÉ«Í¼£©£»±¾ÎÄ²ÉÓÃ8¡£
+   unsigned long   size;  //æŒ‡å®šè¯¥ç»“æ„ä½“çš„é•¿åº¦ï¼Œå³40å­—èŠ‚ã€‚
+   long   width;   //æŒ‡å®šå›¾åƒçš„å®½åº¦ï¼Œå•ä½æ˜¯åƒç´ ã€‚
+   long   height;  //æŒ‡å®šå›¾åƒçš„é«˜åº¦ï¼Œå•ä½æ˜¯åƒç´ ã€‚
+   unsigned short  planes;  //å¿…é¡»æ˜¯1ã€‚
+   unsigned short  bitsperpixel; //æŒ‡å®šè¡¨ç¤ºé¢œè‰²æ—¶è¦ç”¨åˆ°çš„ä½æ•°ï¼Œå¸¸ç”¨å€¼ä¸º1ï¼ˆé»‘ç™½äºŒè‰²å›¾ï¼‰ã€4ï¼ˆ16è‰²å›¾ï¼‰ã€8ï¼ˆ256è‰²å›¾ï¼‰ã€24ï¼ˆçœŸå½©è‰²å›¾ï¼‰ï¼›æœ¬æ–‡é‡‡ç”¨8ã€‚
    unsigned long   compression;
-   unsigned long   sizeofbitmap;  //Ö¸¶¨Êµ¼ÊµÄÎ»Í¼Êı¾İÕ¼ÓÃµÄ×Ö½ÚÊı£¬sizeofbitmap=width'*height¡£
+   unsigned long   sizeofbitmap;  //æŒ‡å®šå®é™…çš„ä½å›¾æ•°æ®å ç”¨çš„å­—èŠ‚æ•°ï¼Œsizeofbitmap=width'*heightã€‚
    unsigned long   horzres;
    unsigned long   vertres;
-   unsigned long   colorsused;  //Ö¸¶¨±¾Í¼ÏñÊµ¼ÊÓÃµ½µÄÑÕÉ«Êı£¬Èç¹û¸ÃÖµÎªÁã£¬ÔòÓÃµ½µÄÑÕÉ«ÊıÎª2µÄbitsperpixel´ÎÃİ¡£
+   unsigned long   colorsused;  //æŒ‡å®šæœ¬å›¾åƒå®é™…ç”¨åˆ°çš„é¢œè‰²æ•°ï¼Œå¦‚æœè¯¥å€¼ä¸ºé›¶ï¼Œåˆ™ç”¨åˆ°çš„é¢œè‰²æ•°ä¸º2çš„bitsperpixelæ¬¡å¹‚ã€‚
    unsigned long   colorsimp;
 };
 
 
-//½á¹¹Ìå£¬µ÷É«°å£¨Õæ²ÊÉ«Í¼²»ĞèÒªµ÷É«°å£©£¬³¤¶ÈÎª4×Ö½Ú¡£
+//ç»“æ„ä½“ï¼Œè°ƒè‰²æ¿ï¼ˆçœŸå½©è‰²å›¾ä¸éœ€è¦è°ƒè‰²æ¿ï¼‰ï¼Œé•¿åº¦ä¸º4å­—èŠ‚ã€‚
 struct ctstruct{
-   unsigned char blue;   //¸ÃÑÕÉ«µÄÀ¶É«·ÖÁ¿¡£
-   unsigned char green;  //¸ÃÑÕÉ«µÄÂÌÉ«·ÖÁ¿¡£
-   unsigned char red;    //¸ÃÑÕÉ«µÄºìÉ«·ÖÁ¿¡£
-   unsigned char rgbReserved; //±£ÁôÖµ¡£
+   unsigned char blue;   //è¯¥é¢œè‰²çš„è“è‰²åˆ†é‡ã€‚
+   unsigned char green;  //è¯¥é¢œè‰²çš„ç»¿è‰²åˆ†é‡ã€‚
+   unsigned char red;    //è¯¥é¢œè‰²çš„çº¢è‰²åˆ†é‡ã€‚
+   unsigned char rgbReserved; //ä¿ç•™å€¼ã€‚
 };

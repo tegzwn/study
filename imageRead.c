@@ -2,32 +2,26 @@
 
 #include "cips.h"
 
-void ReadImageData(char *filename, unsigned char imageData[WIDTH][HEIGHT], int width, int height)
+void ReadImageData(char *filename, unsigned char imageData[HEIGHT][WIDTH], int width, int height)
 {
     FILE *fp;
     int i, j;
-    unsigned char FileHeader[14];
-    unsigned char InfoHeader[40];
-    unsigned char rgbQuad[CLRUSED * 4];
     unsigned char temp;
     int dataOffset;
 
-    // Read BMP headers
-    read_bmpHeader(filename, FileHeader, InfoHeader, rgbQuad);
-
-    // Calculate the offset to the image data
+    // 计算图像数据的起始位置
     dataOffset = 14 + 40 + CLRUSED * 4;
 
-    // Open the BMP file for reading
+    // 打开文件
     if ((fp = fopen(filename, "rb")) == NULL) {
-        printf("Failure to open file! \n");
+        printf("Fail to open file! \n");
         exit(0);
     }
 
-    // Move the file pointer to the start of the image data
+    // 移动到图像数据的起始位置
     fseek(fp, dataOffset, SEEK_SET);
 
-    // Read the image data into the imageData array
+    // 从文件中读取图像数据保存到数组中
     for (i = 0; i < HEIGHT; i++) {
         for (j = 0; j < WIDTH; j++) {
             fread(&temp, 1, 1, fp);
@@ -35,7 +29,7 @@ void ReadImageData(char *filename, unsigned char imageData[WIDTH][HEIGHT], int w
         }
     }
 
-    // Close the BMP file
+    // 关闭文件
     fclose(fp);
 
 }

@@ -71,15 +71,15 @@ int main()
 	}
 
 	// 输出文件大小
-	size = *(int*)&FileHeader[2];
+	size = *(int*)&FileHeader[2];  //将文件大小转换为字节数输出
 	printf("\n FileSize: %d Byte\n", size);
 	
 	// 输出图像宽度
-	width = *(int*)&InfoHeader[4];
+	width = *(int*)&InfoHeader[4]; //将宽度转换为10进制数输出
 	printf("\n Width: %d Pixel\n", width);
 
 	// 输出图像高度
-	height = *(int*)&InfoHeader[8];
+	height = *(int*)&InfoHeader[8]; //将高度转换为10进制数输出
 	printf("\n Height: %d Pixel\n", height);
 
 	// 创建imageData[i][j]数组，存储图像数据
@@ -96,8 +96,8 @@ int main()
 	SaveImage(fileName_OUT2, imageData, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
 
 	// 平移图像部分
-    int shiftX = 30; // 水平平移
-    int shiftY = 20; // 垂直平移
+    int shiftX = 10; // 水平平移
+    int shiftY = 10; // 垂直平移
     ShiftImage(imageData, shiftX, shiftY);  // 移动图像
     char fileName_OUT3[] = "lena6_shift.bmp"; // 输出图像文件名
 	SaveImage(fileName_OUT3, imageData, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件

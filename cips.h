@@ -18,11 +18,12 @@
 void read_bmpHeader(char *filename, unsigned char bmFileHeader[], unsigned char bmInfoHeader[], unsigned char bmClrMap[]);
 
 // 新增函数声明
-void ReadImageData(char *filename, unsigned char imageData[WIDTH][HEIGHT], int width, int height);
+void ReadImageData(char *filename, unsigned char imageData[HEIGHT][WIDTH], int width, int height);
 void SaveImage(const char *fileName, unsigned char imageData[HEIGHT][WIDTH], unsigned char *FileHeader, unsigned char *InfoHeader, unsigned char *rgbQuad) ;
 void SmearImage(unsigned char imageData[HEIGHT][WIDTH]);
 void ShiftImage(unsigned char imageData[HEIGHT][WIDTH], int shiftX, int shiftY);
 void DownsizeImage(unsigned char imageData[HEIGHT][WIDTH], unsigned char scaledImage[HEIGHT][WIDTH]);
+void RotateImage(unsigned char imageData[HEIGHT][WIDTH], unsigned char rotatedImage[HEIGHT][WIDTH]);
 
 /**************************************************
 *

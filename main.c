@@ -83,7 +83,7 @@ int main()
 	printf("\n Height: %d Pixel\n", height);
 
 	// 创建imageData[i][j]数组，存储图像数据
-	unsigned char imageData[WIDTH][HEIGHT];
+	unsigned char imageData[HEIGHT][WIDTH];
 
 	ReadImageData(fileName_IN,imageData,width,height); // 读取图像数据
 
@@ -91,19 +91,21 @@ int main()
 	SaveImage(fileName_OUT1, imageData, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
 
 	// 涂黑四角部分
-	SmearImage(imageData);  // 调用SmearImage函数，修改图像数据
+	unsigned char smearedImage[HEIGHT][WIDTH];
+	SmearImage(imageData, smearedImage);  // 调用SmearImage函数，修改图像数据
     char fileName_OUT2[] = "lena5_black.bmp"; // 输出图像文件名
-	SaveImage(fileName_OUT2, imageData, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
+	SaveImage(fileName_OUT2, smearedImage, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
 
 	// 平移图像部分
-    int shiftX = 10; // 水平平移
-    int shiftY = 10; // 垂直平移
-    ShiftImage(imageData, shiftX, shiftY);  // 移动图像
+    int shiftX = 20; // 水平平移
+    int shiftY = 20; // 垂直平移
+	unsigned char movedImage[HEIGHT][WIDTH];
+    ShiftImage(imageData, shiftX, shiftY, movedImage);  // 移动图像
     char fileName_OUT3[] = "lena6_shift.bmp"; // 输出图像文件名
-	SaveImage(fileName_OUT3, imageData, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
+	SaveImage(fileName_OUT3, movedImage, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
 
 	// 缩小图像部分
-	unsigned char scaledImage[WIDTH][HEIGHT];	// 缩小后的图像数据
+	unsigned char scaledImage[HEIGHT][WIDTH];	// 缩小后的图像数据
 	DownsizeImage(imageData, scaledImage);// 缩小图像
     char fileName_OUT4[] = "lena7_scale.bmp"; // 输出图像文件名
 	SaveImage(fileName_OUT4, scaledImage, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
@@ -115,6 +117,8 @@ int main()
 	SaveImage(fileName_OUT5, rotatedImage, FileHeader, InfoHeader, rgbQuad);  // 保存图像数据到文件
 
 
+
+	/*
 	//debug区域
 	printf("Debug: \n");
 	for (i = 0; i < height; i++)
@@ -127,5 +131,8 @@ int main()
 	}
 
 	return 0;
+*/
+
+
 }
 

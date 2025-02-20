@@ -3,46 +3,52 @@
 #include "cips.h"
 
 // 涂黑图像的四角
-void SmearImage(unsigned char imageData[HEIGHT][WIDTH]) {
+void SmearImage(unsigned char imageData[HEIGHT][WIDTH], unsigned char smearImage[HEIGHT][WIDTH]) {
     int i, j;
+
+    for (i = 0; i < HEIGHT; i++) {
+        for (j = 0; j < WIDTH; j++) {
+            smearImage[i][j] = imageData[i][j];
+        }
+    }
 
     // 将顶部左侧50x50区域涂黑
     for (i = 0; i < 50; i++) {
         for (j = 0; j < 50; j++) {
-            imageData[i][j] = 0;
+            smearImage[i][j] = 0;
         }
     }
 
     // 将底部左侧50x50区域涂黑
     for (i = HEIGHT - 50; i < HEIGHT; i++) {
         for (j = 0; j < 50; j++) {
-            imageData[i][j] = 0;
+            smearImage[i][j] = 0;
         }
     }
 
     // 将顶部右侧50x50区域涂黑
     for (i = 0; i < 50; i++) {
         for (j = WIDTH - 50; j < WIDTH; j++) {
-            imageData[i][j] = 0;
+            smearImage[i][j] = 0;
         }
     }
 
     // 将底部右侧50x50区域涂黑
     for (i = HEIGHT - 50; i < HEIGHT; i++) {
         for (j = WIDTH - 50; j < WIDTH; j++) {
-            imageData[i][j] = 0;
+            smearImage[i][j] = 0;
         }
     }
 }
 
 // 移动图像
-void ShiftImage(unsigned char imageData[HEIGHT][WIDTH], int shiftX, int shiftY) {
+void ShiftImage(unsigned char imageData[HEIGHT][WIDTH], int shiftX, int shiftY, unsigned char shiftedData[HEIGHT][WIDTH]) {
     unsigned char tempImage[HEIGHT][WIDTH] = {0};
     int i, j;
 
     // 确保移动值在有效范围内
     if (shiftX < -WIDTH || shiftX > WIDTH || shiftY < -HEIGHT || shiftY > HEIGHT) {
-        printf("Invalid shift values!\n");
+        printf("无效的移动值!\n");
         return;
     }
 
@@ -61,7 +67,7 @@ void ShiftImage(unsigned char imageData[HEIGHT][WIDTH], int shiftX, int shiftY) 
     // 将平移后的图像复制回原始图像
     for (i = 0; i < HEIGHT; i++) {
         for (j = 0; j < WIDTH; j++) {
-            imageData[i][j] = tempImage[i][j];
+            shiftedData[i][j] = tempImage[i][j];
         }
     }
 }

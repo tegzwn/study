@@ -86,13 +86,13 @@ void DownsizeImage(unsigned char imageData[HEIGHT][WIDTH], unsigned char scaledI
 }
 
 // 旋转图像
-void RotateImage(unsigned char imageData[HEIGHT][WIDTH], unsigned char rotatedImage[HEIGHT][WIDTH]) {
+void RotateImage(unsigned char imageData[HEIGHT][WIDTH], unsigned char rotatedImage[WIDTH][HEIGHT]) {
     int i, j;
 
-    // 顺时针旋转90度
+    // 逆时针旋转90度
     for (i = 0; i < HEIGHT; i++) {
         for (j = 0; j < WIDTH; j++) {
-            rotatedImage[j][HEIGHT - 1 - i] = imageData[i][j];
+            rotatedImage[WIDTH - 1 - j][i] = imageData[i][j];
         }
     }
 }
